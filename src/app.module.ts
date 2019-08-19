@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChannelModule } from './channel/channel.module';
 import { UserModule } from './user/user.module';
+import { WxModule } from './wx/wx.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserModule } from './user/user.module';
     }),
     ChannelModule,
     UserModule,
+    WxModule,
   ],
   controllers: [AppController],
   providers: [AppService],

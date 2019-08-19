@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ChannelService {
+  
   constructor(
     @InjectRepository(Channel)
     private readonly channelRepository: Repository<Channel>,
