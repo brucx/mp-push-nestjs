@@ -8,7 +8,6 @@ export class UserController {
     private readonly userService: UserService,
     ) {}
     
-  
   @Get('user/:openid')
   login(@Param('openid') openid): Promise<User> {
     return this.userService.login(openid)
