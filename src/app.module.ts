@@ -5,22 +5,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChannelModule } from './channel/channel.module';
 import { UserModule } from './user/user.module';
 import { WxModule } from './wx/wx.module';
+import { ConfigModule } from './config/config.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'user',
-      password: 'password',
-      database: 'db',
+      type: 'sqlite',
+      database: './db.sql',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     ChannelModule,
     UserModule,
     WxModule,
+    ConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],

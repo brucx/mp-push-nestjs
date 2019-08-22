@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Logger } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './user/user.service';
 import { User } from './user/user.entity';
@@ -12,5 +12,19 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Post('push')
+  async push(@Body() body) {
+    Logger.verbose(body);
+    const { channelName, text } = body;
+    if (!channelName || !text) {
+      return {
+        error: 1,
+        message: 'Bad params!',
+      };
+    }
+
+    return ;
   }
 }
