@@ -3,9 +3,7 @@ import { UserService } from '../user/user.service';
 
 @Controller('wx')
 export class WxController {
-  constructor(private readonly userService: UserService) {
-
-  }
+  constructor(private readonly userService: UserService) {}
 
   /**
    * 回显
@@ -44,6 +42,7 @@ export class WxController {
       </xml>`;
     }
     const user = await this.userService.login(openid);
+    
     Logger.verbose(user);
     return ;
   }
