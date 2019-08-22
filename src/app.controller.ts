@@ -6,7 +6,7 @@ import { User } from './user/user.entity';
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService
+    private readonly appService: AppService,
     ) {}
 
   @Get()

@@ -12,7 +12,7 @@ export class UserService {
   ) {}
 
   async login(openid: string): Promise<User> {
-    let user = await this.userRepository.findOne({ openid }) || await this.userRepository.save({ openid });
+    const user = await this.userRepository.findOne({ openid }) || await this.userRepository.save({ openid });
     return user;
   }
 
