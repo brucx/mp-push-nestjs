@@ -1,4 +1,4 @@
-# MP-PUSH-
+# MP-PUSH
 
 一个频道可以被多个微信订阅，一个微信也可以订阅多个频道。当有消息到达频道时，会向所有订阅的微信推送通知。
 
@@ -16,18 +16,27 @@
 
 推荐使用 Ubuntu 系统
 
+```
+apt update
+apt upgrade
+```
 
 ## 准备部署
 
 安装 Docker 环境
-然后执行以下指令：
+
+```
+apt install docker.io
+```
+
+然后执行以下指令
 
 ```
 $ sudo docker run -d \
 -e WX_APP_ID="wxc124e540d18*****" \
 -e WX_APP_SC="dcd143ad7e000de32c0236**********" \
 -e WX_TEMPLATE_ID="bzrWGCKcwMNPuerpK4WrsbMJ_kq0I4CWxyM207sy8Uk" \
--p 3000:3000 \
+-p 80:3000 \
 -v mppushdb:"/app/data" \
 brucex/mp-push-nestjs
 ```
@@ -36,7 +45,7 @@ brucex/mp-push-nestjs
 
 在[测试号管理](https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index)页面确认接口配置信息。
 
-URL 为 `http://域名或IP:3000/wx`
+URL 为 `http://域名或IP/wx`
 
 Token 随意不校验
 
