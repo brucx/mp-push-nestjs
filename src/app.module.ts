@@ -11,7 +11,7 @@ import { ConfigModule } from './config/config.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: './db.sql',
+      database: process.env.DB_PATH || './data/db.sql',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       logging: process.env.NODE_ENV !== 'production',
