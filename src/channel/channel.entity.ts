@@ -10,7 +10,7 @@ export class Channel {
   @JoinColumn()
   owner: User;
 
-  @ManyToMany(type => Channel, (user: User) => user.followChannels)
+  @ManyToMany(type => User, (user: User) => user.followChannels)
   @JoinTable()
   subscribers: User[];
 
