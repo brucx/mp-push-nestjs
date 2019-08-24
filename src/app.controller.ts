@@ -32,7 +32,7 @@ export class AppController {
     if (!channel) {
       return {
         error: 1,
-        message: 'channel not exist!',
+        message: 'Channel not exist!',
       };
     }
     channel.subscribers.forEach(user => {
@@ -47,6 +47,9 @@ export class AppController {
       });
     });
 
-    return ;
+    return {
+      error: 0,
+      message: `Sending ${channel.subscribers.length} msg...`,
+    };
   }
 }
