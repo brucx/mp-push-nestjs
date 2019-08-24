@@ -1,3 +1,3 @@
 {
-  "workbench.colorCustomizations": {}
+  "debug.node.autoAttach": "on"
 }
