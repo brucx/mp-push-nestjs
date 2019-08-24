@@ -1,9 +1,10 @@
 import { Controller, Post, Body, Get, Query, Logger } from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import { ChannelService } from '../channel/channel.service';
 
 @Controller('wx')
 export class WxController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly channelService: ChannelService) {}
 
   /**
    * 回显
@@ -31,8 +32,8 @@ export class WxController {
       msgtype: [msgtype],
       content: [content],
     } = body.xml;
-    const [cmd, param] = content.trim().split(' ');
-    if (cmd !== 'link' || !param) {
+    const [cmd, channelName] = content.trim().split(' ');
+    if (cmd !== 'link' || !channelName) {
       return `<xml>
         <ToUserName><![CDATA[${openid}]]></ToUserName>
         <FromUserName><![CDATA[${appid}]]></FromUserName>
@@ -42,8 +43,17 @@ export class WxController {
       </xml>`;
     }
     const user = await this.userService.login(openid);
-    
     Logger.verbose(user);
-    return ;
+    const channel = await this.channelService.linkChannel(channelName, user);
+    Logger.verbose(channel);
+    const {followChannels} = await this.userService.fetch(user);
+    Logger.verbose(followChannels);
+    return `<xml>
+      <ToUserName><![CDATA[${openid}]]></ToUserName>
+      <FromUserName><![CDATA[${appid}]]></FromUserName>
+      <CreateTime>${Math.floor(+new Date() / 1000)}</CreateTime>
+      <MsgType><![CDATA[text]]></MsgType>
+      <Content><![CDATA[${followChannels.map(channel => channel.name).join('\n')}]]></Content>
+    </xml>`;
   }
 }

@@ -3,9 +3,10 @@ import { WxService } from './wx.service';
 import { WxController } from './wx.controller';
 import { UserModule } from '../user/user.module';
 import { ConfigModule } from '../config/config.module';
+import { ChannelModule } from '../channel/channel.module';
 
 @Module({
-  imports: [ConfigModule, HttpModule, UserModule],
+  imports: [ConfigModule, HttpModule, UserModule, ChannelModule],
   providers: [WxService],
   controllers: [WxController],
 })

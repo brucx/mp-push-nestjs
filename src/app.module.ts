@@ -14,6 +14,7 @@ import { ConfigModule } from './config/config.module';
       database: './db.sql',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+      logging: process.env.NODE_ENV !== 'production',
     }),
     ChannelModule,
     UserModule,

@@ -16,7 +16,11 @@ export class UserService {
     return user;
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  findAll(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  fetch(user: User): Promise<User> {
+    return this.userRepository.findOne(user, {relations: ['followChannels', 'ownChannels']});
   }
 }
