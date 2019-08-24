@@ -1,12 +1,16 @@
 import { Controller, Get, Post, Body, Logger } from '@nestjs/common';
 import { AppService } from './app.service';
-import { UserService } from './user/user.service';
-import { User } from './user/user.entity';
+import { WxService } from './wx/wx.service';
+import { ConfigService } from './config/config.service';
+import { ChannelService } from './channel/channel.service';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
+    private readonly wxService: WxService,
+    private readonly configService: ConfigService,
+    private readonly channelService: ChannelService,
     ) {}
 
   @Get()
@@ -24,6 +28,24 @@ export class AppController {
         message: 'Bad params!',
       };
     }
+    const channel = await this.channelService.findByName(channelName);
+    if (!channel) {
+      return {
+        error: 1,
+        message: 'channel not exist!',
+      };
+    }
+    channel.subscribers.forEach(user => {
+      this.wxService.send({
+        template_id: this.configService.WX_TEMPLATE_ID,
+        touser: user.openid,
+        data: {
+          first: {
+            value: text,
+          },
+        },
+      });
+    });
 
     return ;
   }
