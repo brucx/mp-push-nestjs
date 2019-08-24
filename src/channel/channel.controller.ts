@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param, Logger } from '@nestjs/common';
 import { Channel } from './channel.entity';
 import { ChannelService } from './channel.service';
 
@@ -7,12 +7,13 @@ export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}
 
   @Get('channels')
-  getUsers(): Promise<Channel[]> {
+  getChannels(): Promise<Channel[]> {
     return this.channelService.findAll();
   }
 
-  @Post('channel/:name')
-  push(@Param('name') name): Promise<Channel> {
+  @Get('channel/:name')
+  getChannelByName(@Param('name') name): Promise<Channel> {
+    Logger.verbose(name)
     return this.channelService.findByName(name);
   }
 }
