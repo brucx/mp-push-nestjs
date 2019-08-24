@@ -26,10 +26,10 @@ export class WxController {
   @Post()
   async message(@Body() body) {
     Logger.verbose(body);
+    if (body.xml.msgtype[0] !== 'text') { return; }
     const {
       tousername: [appid],
       fromusername: [openid],
-      msgtype: [msgtype],
       content: [content],
     } = body.xml;
     const [cmd, channelName] = content.trim().split(' ');
@@ -44,8 +44,7 @@ export class WxController {
     }
     const user = await this.userService.login(openid);
     Logger.verbose(user);
-    const channel = await this.channelService.linkChannel(channelName, user);
-    Logger.verbose(channel);
+    await this.channelService.linkChannel(channelName, user);
     const {followChannels} = await this.userService.fetch(user);
     Logger.verbose(followChannels);
     return `<xml>
@@ -53,7 +52,7 @@ export class WxController {
       <FromUserName><![CDATA[${appid}]]></FromUserName>
       <CreateTime>${Math.floor(+new Date() / 1000)}</CreateTime>
       <MsgType><![CDATA[text]]></MsgType>
-      <Content><![CDATA[${followChannels.map(channel => channel.name).join('\n')}]]></Content>
+      <Content><![CDATA[${followChannels.map(channel => channel.name).reverse().join('\n')}]]></Content>
     </xml>`;
   }
 }

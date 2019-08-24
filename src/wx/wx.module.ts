@@ -9,5 +9,6 @@ import { ChannelModule } from '../channel/channel.module';
   imports: [ConfigModule, HttpModule, UserModule, ChannelModule],
   providers: [WxService],
   controllers: [WxController],
+  exports: [WxService],
 })
 export class WxModule {}

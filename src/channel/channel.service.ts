@@ -17,7 +17,7 @@ export class ChannelService {
   }
 
   findByName(name: string): Promise<Channel> {
-    return this.channelRepository.findOne({name});
+    return this.channelRepository.findOne({name}, {relations: ['subscribers']});
   }
 
   /**
