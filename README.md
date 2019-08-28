@@ -56,7 +56,7 @@ Token 随意不校验
 发送 POST 请求触发推送
 
 ```
-curl -X POST 'https://二级域名.leanapp.cn/push' \
+curl -X POST 'http://域名或IP/push' \
 -H 'content-type: application/json' \
 -d '{ "channelName": "频道名称", "text": "OK" }'
 ```
